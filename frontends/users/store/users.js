@@ -2,14 +2,20 @@ import { centralBase } from '@/utils';
 export const state = () => ({
     cartAmount: '0.00',
     cartItems: [],
-    orders: []
+    orders: [],
+    fetched: false
 })
 
 export const actions = {
     // Products and Cart
     async fetchOrders({commit}, id) {
-        const response = await this.$axios.get(`${centralBase}/orders/history/${id}`);
-        commit('SET_ORDERS', response.data)
+        try {
+            const response = await this.$axios.get(`${centralBase}/orders/history/${id}`);
+            commit('SET_ORDERS', response.data)
+            commit('ACCEPT_FETCH', true)
+        } catch(err) {
+            commit('ACCEPT_FETCH', false)
+        }
     },
     updateOrderStatus({commit}, payload) {
         commit('UPDATE_ORDERS', payload)
@@ -47,6 +53,9 @@ export const actions = {
 
 export const mutations = {
     // products & Cart
+    ACCEPT_FETCH(state, bool) {
+        state.fetched = bool
+    },
     SET_PRODUCTS(state, payload) {
         state.products = payload
     },

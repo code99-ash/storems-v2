@@ -14,13 +14,19 @@ export const state = () => ({
         price: 2500
       },
     ],
+    fetched: false,
 })
 
 export const actions = {
     // Products and Cart
       async fetchProducts({commit}) {
-        const response = await this.$axios.get(`${centralBase}/products`);
-        commit('SET_PRODUCTS', response.data)
+        try {
+          const response = await this.$axios.get(`${centralBase}/products`);
+          commit('SET_PRODUCTS', response.data)
+          commit('ACCEPT_FETCH', true)
+        } catch(err) {
+            commit('ACCEPT_FETCH', false)
+        }
       },
       addProduct({commit}, payload) {
         commit('ADD_PRODUCT', payload)
@@ -33,20 +39,23 @@ export const actions = {
 
 export const mutations = {
     // products & Cart
-      SET_PRODUCTS(state, payload) {
-        // console.log(payload)
-        state.products = payload
-      },
-      UPDATE_ORDERS(state, {ids, status}) {
-        state.orders = state.orders.map(each => ids.includes(each._id)? {...each, status} : each)
-      },
-  
-      ADD_PRODUCT(state, payload) {
-        state.products.push(payload)
-      },
-  
-      REMOVE_PRODUCT(state, id) {
-        state.products = state.products.filter(each => each._id !== id)
-      },
+    ACCEPT_FETCH(state, bool) {
+      state.fetched = bool
+    },
+    SET_PRODUCTS(state, payload) {
+      // console.log(payload)
+      state.products = payload
+    },
+    UPDATE_ORDERS(state, {ids, status}) {
+      state.orders = state.orders.map(each => ids.includes(each._id)? {...each, status} : each)
+    },
+
+    ADD_PRODUCT(state, payload) {
+      state.products.push(payload)
+    },
+
+    REMOVE_PRODUCT(state, id) {
+      state.products = state.products.filter(each => each._id !== id)
+    },
   
 }

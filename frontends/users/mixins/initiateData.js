@@ -11,8 +11,8 @@ export default {
                     await this.$store.dispatch('auth/userRequest', token);
                 }
             }
-            await this.$store.dispatch('fetchProducts')
-            await this.$store.dispatch('getCartItems')
+            // await this.$store.dispatch('fetchProducts')
+            // await this.$store.dispatch('getCartItems')
         },
     }
 }
