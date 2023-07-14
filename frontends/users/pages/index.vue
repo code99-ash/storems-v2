@@ -1,0 +1,73 @@
+<template>
+  <div class="home">
+    <div class="hero-banner">
+      <div class="hero-content">
+        <button class="arrow-down">
+          <i class="pi pi-arrow-down text-3xl"></i>
+        </button>
+        <div class="hero-highlight max-w-[600px] space-y-3">
+          <h1>PizzaPixel</h1>
+          <!-- <h4>Pizza treats</h4> -->
+          <p class="text-neutral-50 text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque mollitia labore sed, excepturi aspernatur error consequatur provident, veritatis similique quidem beatae iure. Ex corrupti quis</p>
+          <button class="btn bg-orange-500 text-white">
+            Start Order <i class="pi pi-arrow-down text-sm"></i>
+          </button>
+        </div>
+        <div class="hero-footer text-sm space-y-5">
+          <p class="leading-relaxed font-light text-white bg-[#070404c9] p-2">
+            2, Abak Road, Uyo, <br>
+            Akwa Ibom State, Nigeria
+          </p>
+          <p class="font-light text-white bg-[#070404c9] p-2 ml-[50px]">
+            A taste that satisfy your hunger
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <section class="py-[20px] max-w-[1200px] mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
+       
+        <!-- Produt Card -->
+        <product-card
+          v-for="p in $store.state.products" 
+          :key="p._id" :product="p"
+        ></product-card>
+
+      </div>
+    </section>
+  </div>
+</template>
+
+<script>
+import ProductCard from '@/components/ProductCard.vue';
+export default {
+  components: { ProductCard }
+}
+
+</script>
+
+
+<style scoped>
+.hero-banner {
+  background: url('/images/hero-banner.png');
+  @apply w-full h-[500px] sm:h-[600px] bg-cover bg-no-repeat bg-center relative;
+}
+.hero-content {
+  @apply max-w-[1200px] h-full mx-auto py-[100px] p-3 relative;
+}
+.hero-highlight h1 {
+  @apply text-white text-6xl font-medium;
+}
+.hero-highlight h4 {
+  @apply text-white text-3xl mx-5 mt-4 font-medium;
+}
+.hero-footer {
+  @apply absolute bottom-0 py-[30px] md:pl-3 border-t border-slate-300 min-w-[95%] md:min-w-[400px] min-h-[120px]
+  text-slate-300;
+}
+.arrow-down {
+  @apply w-[65px] h-[65px] rounded-full bg-[#8D6527] text-white absolute bottom-[30px] 
+  right-0 hidden md:block;
+}
+</style>

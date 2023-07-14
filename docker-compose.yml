@@ -17,6 +17,8 @@ services:
       - PORT=4001
     volumes:
       - ./backends/authserver:/app
+    networks:
+      - mynetwork
   productserver:
     build:
       context: ./backends/productserver
@@ -35,6 +37,39 @@ services:
       - AMQP_BASE=amqp://rabbitmq
     volumes: 
       - ./backends/productserver:/app
+    networks:
+      - mynetwork
+  # userclient:
+  #   build:
+  #     context: ./frontends/users
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - '3000:3000'
+  #   depends_on:
+  #     - productserver
+  #     - authserver
+  #   environment:
+  #     - VUE_APP_PRODUCTION_MODE=true
+  #     - VUE_APP_PRODUCTION_HOST=http://localhost
+  #   volumes:
+  #     - ./frontends/users:/app
+  #   networks:
+  #     - mynetwork
+  authclient:
+    build:
+      context: ./frontends/authentication
+      dockerfile: Dockerfile
+    ports:
+      - '8082:8082'
+    depends_on:
+      - authserver
+    environment:
+      - VUE_APP_PRODUCTION_MODE=true
+      - VUE_APP_PRODUCTION_HOST=http://localhost
+    volumes:
+      - ./frontends/authentication:/app
+    networks:
+      - mynetwork
   redis:
     image: redis:latest
     ports:
@@ -47,11 +82,13 @@ services:
   mongodb:
     image: mongo
     container_name: mongodb
-    restart: always
+    # restart: always
     ports:
       - '27017:27017'
     volumes:
       - ./data/db:/data/db
+    networks:
+      - mynetwork
   nginx:
     image: nginx:latest
     volumes:
@@ -64,3 +101,7 @@ services:
       - mongodb
       - redis
       - rabbitmq
+    networks:
+      - mynetwork
+networks:
+  mynetwork:
