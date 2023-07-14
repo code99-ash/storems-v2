@@ -23,7 +23,7 @@ app.use(express.urlencoded({extended: false}))
 app.get('/api/hey', (req, res) => {
     res.send("<h1>Hey Buddy</h1>")
 })
-app.use('/api/images', express.static('uploads'))
+app.use('/api/products/images', express.static('uploads'))
 app.use('/api/products', require('./routes/products.js'))
 
 

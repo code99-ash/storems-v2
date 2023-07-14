@@ -8,7 +8,7 @@
             <nuxt-link to="/cart" class="cart-btn">
                 <span class="hidden md:inline">My Cart</span> 
                 <i class="pi pi-shopping-bag"></i>
-                {{ $store.state.cartItems.length  }}
+                {{ $store.state.users.cartItems.length  }}
             </nuxt-link>
         </div>
         <button class="account-btn" @click="$store.dispatch('auth/setOpenAuth', true)" v-if="!isAuthenticated">

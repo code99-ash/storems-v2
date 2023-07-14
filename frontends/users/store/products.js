@@ -1,4 +1,4 @@
-import { centralBase } from '@/utils';
+import { env } from '@/utils';
 export const state = () => ({
     data: [
       {

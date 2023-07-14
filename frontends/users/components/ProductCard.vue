@@ -2,9 +2,9 @@
     <div class="product-card group">
           <img :src="`${imageBase}/${product.image}`" class="prod-img group-hover:scale-40 transition-all" />
           <div class="prod-body">
-            <p class="text-slate-500 text-sm">{{product.title}}</p>
+            <p class="text-slate-500 text-sm ellipsis-2">{{product.title}}</p>
             <div class="flex justify-between items-center">
-              <h4 class="text-xl font-medium text-slate-500">#{{product.price}}</h4>
+              <h4 class="sm:text-xl font-medium text-slate-500">#{{product.price}}</h4>
               <div class="flex items-center gap-x-3">
                 <input 
                     type="number" 
@@ -27,7 +27,7 @@ import { centralBase } from '@/utils'
 export default {
   props: ['product'],
   data: () => ({
-    imageBase: `${centralBase}/images`,
+    imageBase: `${centralBase}/products/images`,
     qty: 0
   }),
   mounted() {
@@ -62,7 +62,7 @@ export default {
   @apply bg-white border border-slate-200 hover:shadow-lg p-2 flex flex-col justify-between h-max;
 }
 .prod-img {
-  @apply grow object-cover w-full h-auto scale-[.8] xl:scale-100;
+  @apply grow object-cover w-auto m-auto h-[150px] sm:h-[250px] scale-[.8] xl:scale-100;
 }
 .prod-body {
   @apply p-2 space-y-2 flex-none h-[100px] flex flex-col justify-end;

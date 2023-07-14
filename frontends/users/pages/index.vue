@@ -25,14 +25,17 @@
       </div>
     </div>
     
-    <section class="py-[20px] max-w-[1200px] mx-auto">
+    <section class="py-[20px] container">
       <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
        
         <!-- Produt Card -->
-        <product-card
-          v-for="p in $store.state.products" 
-          :key="p._id" :product="p"
-        ></product-card>
+        <card-skeleton v-if="loading"></card-skeleton>
+        <template v-else>
+          <product-card
+            v-for="p in $store.state.products.data" 
+            :key="p._id" :product="p"
+          ></product-card>
+        </template>
 
       </div>
     </section>
@@ -41,8 +44,28 @@
 
 <script>
 import ProductCard from '@/components/ProductCard.vue';
+import CardSkeleton from '@/components/Skeletons/ProductCardSkt.vue'
 export default {
-  components: { ProductCard }
+  components: { 
+    ProductCard, CardSkeleton
+  },
+  data: () => ({
+    loading: false,
+  }),
+  mounted() {
+    this.initiateProducts()
+  },
+  methods: {
+    async initiateProducts() {
+      const state = this.$store.state.products;
+      if(state.fetched) return;
+
+      this.loading = true;
+      await this.$store.dispatch('products/fetchProducts');
+      this.loading = false;
+
+    }
+  }
 }
 
 </script>
