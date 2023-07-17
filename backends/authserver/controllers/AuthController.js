@@ -32,7 +32,7 @@ module.exports = {
       try {
         const { email, password } = req.body
         const user = await User.findOne({email});
-        // console.log(req.body)
+        // console.log(email, user)
         if(!user) return res.status(400).send("Credentials do not exists, please try again.");
         
         // Password Check

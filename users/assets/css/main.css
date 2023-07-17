@@ -114,3 +114,8 @@ code {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
 }
+
+.error-alert {
+  @apply bg-red-200 text-red-400 p-3 font-medium text-sm rounded flex justify-between 
+  font-medium gap-2;
+}

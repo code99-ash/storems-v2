@@ -5,7 +5,7 @@
 
             <div class="flex items-center gap">
                 <router-link to="/admin/account" class="top-link">Account</router-link>
-                <button class="top-link">Logout</button>
+                <button class="top-link" @click="$auth.logout()">Logout</button>
             </div>
         </header>
         <main class="flex gap-3">
@@ -15,7 +15,7 @@
                 </nuxt-link>
             </nav>
 
-            <div class="grow">
+            <div class="grow px-3 pb-[80px] md:pb-0">
                 <nuxt />
             </div>
         </main>
@@ -25,6 +25,7 @@
 
 <script>
 export default {
+    middleware: ['auth', 'admin'],
     data: () => ({
         menus: [
             {name: 'Menu', icon: 'pi-chevron-right', path: '/admin'},
