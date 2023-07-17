@@ -1,36 +1,43 @@
 <template>
-  <div class="">
-    <main class="container py-3">
-      <div class="flex flex-col md:flex-row gap-5">
-       
-        <div class="grow space-y-2">
-          <!-- Cart Item -->
-          <cart-item v-for="i in $store.state.cartItems" :key="i.id" :item="i"></cart-item>
-        </div>
-        <!-- Checkout Info -->
-        <div class="flex-none sm:w-[350px] xl:w-[500px] min-h-[100px] bg-slate-100 rounded p-3">
-          <h1 class="text-xl font-medium text-slate-500">Checkout Info</h1>
-          <form class="space-y-3 mt-3" @submit.prevent="checkoutOrder">
-            <div class="form-group">
-              <label>Address</label>
-              <input type="text" v-model="address" />
-            </div>
-            <div class="form-group">
-              <label>Contact Number</label>
-              <input type="text" placeholder="+234-903-444-4444" v-model="phone" />
-            </div>
+  <div class="bg-neutral-800 min-h-[100vh] pt-[100px] flex flex-col md:flex-row gap-3">
+      <div class="bg-amber-600 w-full md:w-1/3 md:min-h-[80vh] p-3 md:p-[25px]">
+        <h1 class="text-xl md:text-3xl font-['Quesha'] font-medium mb-3 text-neutral-50">
+          Cart Items
+        </h1>
 
-            <button 
-              class="text-white px-[12px] py-[8px] bg-orange-400 float-right rounded" 
-              :class="{'cursor-not-allowed saturate-50': $store.state.cartItems.length == 0}"
-              :disabled="$store.state.cartItems.length == 0"
-            >
-              Checkout&nbsp;&nbsp;{{$store.state.cartAmount}} <i class="pi pi-shopping-cart text-lg ml-1"></i>
-            </button>
-          </form>
-        </div>
+        <table class="w-full">
+          <CartItem v-for="m in items" :key="m.id" :item="m" />
+        </table>
       </div>
-    </main>
+
+      <!-- Right Side -->
+      <div class="p-3 md:p-[25px] w-full md:w-2/3">
+        <h1 class="text-xl md:text-3xl font-['Quesha'] font-medium mb-3 text-neutral-50">
+          Checkout Information
+        </h1>
+
+        <section class="mt-[25px] space-y-5">
+          <div class="form-group">
+            <label for="address">Delivery Address</label>
+            <input type="text" />
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-1/2 form-group">
+              <label for="phone">Mobile number</label>
+              <input type="text" />
+            </div>
+            <div class="w-1/2 form-group">
+              <label for="phone">Delivery time</label>
+              <input type="time" />
+            </div>
+          </div>
+        </section>
+
+        <button class="checkout-btn group">
+          <span class="indicator w-0 group-hover:w-full"></span>
+          <span class="z-[100] relative">Order Now <i class="pi pi-shopping-bag text-sm ml-1"></i></span>
+        </button>
+      </div>
   </div>
 </template>
 
@@ -38,14 +45,22 @@
 <script>
 import { centralBase } from '~/utils';
 import CartItem from '../components/CartItem.vue';
+import CartTabbar from '../components/Common/CartTabbar.vue';
 export default {
-  components: { CartItem },
-  layout: 'guest',
+  components: { CartItem, CartTabbar },
   data: () => ({
     address: '2, ABC Street,Uyo',
-    phone: '+2348129029753'
+    phone: '+2348129029753',
+    activeTab: 0,
+    items: [
+      {id: 1, title: 'Double Expresso', price: '12.9', quantity: 1},
+      {id: 2, title: 'Americano', price: '13.9', quantity: 1},
+    ]
   }),
   methods: {
+    activeTabChanged(index) {
+      this.activeTab = index
+    },
     async checkoutOrder() {
       if(!(this.address && this.phone)) {
         this.$store.dispatch('addFeedback', {
@@ -101,10 +116,22 @@ export default {
   @apply space-y-1;
 }
 .form-group label {
-  @apply text-slate-500 text-[14px] font-medium block;
+  @apply text-neutral-100 opacity-60 text-[14px] font-light block uppercase;
 }
 .form-group input {
-  @apply h-[38px] w-full border border-slate-300 text-sm text-slate-500
-  rounded p-2 outline-0;
+  @apply h-[42px] w-full border border-[#fffbeb5e] text-sm text-slate-50
+  rounded p-2 outline-0 bg-transparent;
 }
+.no-item {
+  @apply border border-red-500 rounded py-[15px] px-3 text-center rounded-md
+  text-red-500 font-medium;
+}
+.checkout-btn {
+  @apply px-[14px] py-[10px] border border-neutral-50 text-neutral-50 mt-10 
+  relative float-right;
+}
+.checkout-btn .indicator {
+  @apply h-full transition-all bg-amber-600 absolute top-0 left-0;
+}
+
 </style>

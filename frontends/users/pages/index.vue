@@ -1,71 +1,85 @@
 <template>
-  <div class="home">
+  <section>
     <div class="hero-banner">
-      <div class="hero-content">
-        <button class="arrow-down">
-          <i class="pi pi-arrow-down text-3xl"></i>
-        </button>
-        <div class="hero-highlight max-w-[600px] space-y-3">
-          <h1>PizzaPixel</h1>
-          <!-- <h4>Pizza treats</h4> -->
-          <p class="text-neutral-50 text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque mollitia labore sed, excepturi aspernatur error consequatur provident, veritatis similique quidem beatae iure. Ex corrupti quis</p>
-          <button class="btn bg-orange-500 text-white">
-            Start Order <i class="pi pi-arrow-down text-sm"></i>
+      <div class="hero-wrapper">
+        <div class="banner-content">
+          <h1 class="">SmoothKafé</h1>
+          <p>Discover the real taste of coffee with SmoothKafé</p>
+          <button class="px-[14px] py-[10px] rounded-full bg-amber-600 text-white">
+            Order menu <i class="pi pi-arrow-down text-sm ml-2"></i>
           </button>
         </div>
-        <div class="hero-footer text-sm space-y-5">
-          <p class="leading-relaxed font-light text-white bg-[#070404c9] p-2">
-            2, Abak Road, Uyo, <br>
-            Akwa Ibom State, Nigeria
-          </p>
-          <p class="font-light text-white bg-[#070404c9] p-2 ml-[50px]">
-            A taste that satisfy your hunger
-          </p>
+        <div class="hero-footer space-y-2">
+          <p class="text-slate-50">12 Aka Road, Uyo, Akwa Ibom</p>
+          <div class="footer-socials">
+            <i class="pi pi-instagram"></i>
+            <i class="pi pi-facebook"></i>
+            <i class="pi pi-twitter"></i>
+          </div>
         </div>
       </div>
     </div>
-    
-    <section class="py-[20px] container">
-      <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
-       
-        <!-- Produt Card -->
-        <card-skeleton v-if="loading"></card-skeleton>
-        <template v-else>
-          <product-card
-            v-for="p in $store.state.products.data" 
-            :key="p._id" :product="p"
-          ></product-card>
-        </template>
+    <section class="about">
+      <div class="flex flex-col md:flex-row gap-3 xl:gap-5 max-w-[900px] mx-auto px-3">
+        <img 
+          src="/images/coffee-hero.jpg" 
+          class="w-[300px] h-auto md:w-[400px] md:h-[500px] hidden sm:inline" 
+        />
+        <div class="max-w-[600px] px-3 sm:pl-[80px] space-y-5 md:pt-[50px]">
+          <h1 class="font-['Quesha sans-serif'] text-4xl text-neutral-100 uppercase">About SmoothKafé</h1>
+          <p class="text-sm text-slate-100">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus maiores porro accusamus eius provident blanditiis dolorum sed explicabo! Hic saepe sunt temporibus praesentium expedita. Voluptate voluptatibus culpa temporibus aspernatur cupiditate tempora, molestias sapiente porro, inventore libero, voluptatum maxime qui architecto!</p>
+
+          <button class="px-[14px] py-[6px] rounded-full border border-slate-50 text-slate-50">
+            Learn more <i class="pi pi-arrow-right text-xs"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+    <section class="menu">
+      <div class="max-w-[800px] mx-auto flex flex-col md:flex-row gap-3 px-3">
+        <div class="md:w-1/2">
+          <h1 class="text-amber-50 text-5xl md:text-[50px] font-['Quesha san-serif']">Our Menu</h1>
+          <button class="w-[150px] py-[8px] border-2 border-amber-50 text-amber-50 rounded-full mt-4">
+            See more <i class="pi pi-arrow-right ml-2 text-xs"></i>
+          </button>
+        </div>
+
+        <!-- Menu List -->
+        <table class="table-auto md:w-1/2 px-3">
+          <thead>
+            <tr>
+              <th class="menu-head">Name</th>
+              <th class="menu-head right">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="m in menus" :key="m.id" class="group">
+              <td class="menu-data group-hover:opacity-50 group-hover:cursor-pointer">{{ m.title }}</td>
+              <td class="menu-data right group-hover:opacity-50 group-hover:cursor-pointer">{{ m.price }}</td>
+              <td class="px-3">
+                <i class="pi pi-shopping-cart text-amber-50 hover:cursor-pointer"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
 
       </div>
     </section>
-  </div>
+  </section>
 </template>
 
 <script>
-import ProductCard from '@/components/ProductCard.vue';
-import CardSkeleton from '@/components/Skeletons/ProductCardSkt.vue'
 export default {
-  components: { 
-    ProductCard, CardSkeleton
-  },
   data: () => ({
-    loading: false,
-  }),
-  mounted() {
-    this.initiateProducts()
-  },
-  methods: {
-    async initiateProducts() {
-      const state = this.$store.state.products;
-      if(state.fetched) return;
-
-      this.loading = true;
-      await this.$store.dispatch('products/fetchProducts');
-      this.loading = false;
-
-    }
-  }
+    menus: [
+      {id: 1, title: 'Double Expresso', price: '$12.9'},
+      {id: 2, title: 'Americano', price: '$13.9'},
+      {id: 3, title: 'Iced Americano', price: '$13.9'},
+      {id: 4, title: 'Capuccino', price: '$14.9'},
+      {id: 4, title: 'Flat White', price: '$11.9'},
+    ]
+  })
 }
 
 </script>
@@ -73,24 +87,60 @@ export default {
 
 <style scoped>
 .hero-banner {
-  background: url('/images/hero-banner.png');
-  @apply w-full h-[500px] sm:h-[600px] bg-cover bg-no-repeat bg-center relative;
+  background: url('/images/coffee-g31f50df5c_1280.jpg');
+  @apply w-full h-[500px] sm:h-[100vh] bg-cover bg-no-repeat bg-center relative;
 }
-.hero-content {
-  @apply max-w-[1200px] h-full mx-auto py-[100px] p-3 relative;
+.hero-wrapper {
+  @apply w-full h-full;
 }
-.hero-highlight h1 {
-  @apply text-white text-6xl font-medium;
+.banner-content {
+  @apply pt-[100px] md:pt-[150px] pb-[80px] max-w-[90%] sm:max-w-[768px] mx-auto flex flex-col
+  items-center space-y-2;
 }
-.hero-highlight h4 {
-  @apply text-white text-3xl mx-5 mt-4 font-medium;
+.banner-content p, .banner-content h1 {
+  font-family: Quesha;
+  @apply drop-shadow-lg;
 }
+.banner-content h1 {
+  @apply text-white text-4xl sm:text-7xl font-medium;
+}
+.banner-content p {
+  @apply text-white text-base sm:text-3xl font-light text-center;
+}
+
 .hero-footer {
-  @apply absolute bottom-0 py-[30px] md:pl-3 border-t border-slate-300 min-w-[95%] md:min-w-[400px] min-h-[120px]
-  text-slate-300;
+  @apply absolute bottom-0 py-[25px] pl-3 border-t border-slate-300 min-w-[95%] 
+  md:min-w-[400px] min-h-[120px] text-slate-300;
 }
 .arrow-down {
   @apply w-[65px] h-[65px] rounded-full bg-[#8D6527] text-white absolute bottom-[30px] 
   right-0 hidden md:block;
+}
+.footer-socials {
+  @apply flex gap-3 items-center;
+}
+.footer-socials .pi {
+  @apply text-slate-100 text-sm transition hover:bg-white hover:text-slate-700 px-2 py-1 rounded-full;
+}
+.about {
+  @apply bg-neutral-800 min-h-[60vh] py-[100px] border-t border-slate-50;
+}
+.menu {
+  @apply bg-amber-800 min-h-[60vh] py-[100px];
+}
+tr {
+  @apply border-b border-[#fffbeb5e];
+}
+.menu-head {
+  @apply text-sm text-left text-[#fff] opacity-50 uppercase pb-3;
+}
+.menu-head.right {
+  @apply text-right;
+}
+.menu-data {
+  @apply text-sm text-left text-[#fff] capitalize py-3;
+}
+.menu-data.right {
+  @apply text-right;
 }
 </style>

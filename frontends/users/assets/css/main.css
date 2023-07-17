@@ -20,16 +20,17 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  @apply bg-[#FFFDF6];
-}
-
-.container {
-  @apply max-w-[1250px] mx-auto px-3;
+  @apply bg-neutral-800;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@font-face {
+  font-family: 'Quesha';
+  src: url('@/assets/fonts/Quesha.ttf')  format('truetype'),
 }
 
 @layer utilities {
@@ -56,6 +57,9 @@ code {
     border-radius: 100px;
     background-color: #ccc;
     /* vertical-align: middle */
+  }
+  .container {
+    @apply max-w-[1250px] mx-auto px-3;
   }
 }
 
@@ -88,10 +92,10 @@ code {
 }
 
 .cart-btn {
-  @apply bg-[#7C3100] p-[8px] text-[14px] text-white border border-white;
+  @apply bg-amber-600 rounded-md py-[10px] text-sm px-[12px] text-white border border-white;
 }
 .account-btn {
-  @apply text-[#7C3100] p-[8px] text-[14px] bg-slate-50 rounded;
+  @apply text-[#7C3100] py-[10px] text-sm px-[12px] bg-slate-50 rounded border;
 }
 
 .list-enter-active,

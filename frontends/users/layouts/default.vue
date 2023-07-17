@@ -1,46 +1,47 @@
 <template>
-    <section>
-        <header class="w-full fixed z-50 p-3 md:p-0">
-            <nav class="header-nav">
-                <header-right-links></header-right-links>
-            </nav>
-        </header>
-        <section class="">
-            <Transition name="fade">
-                <nuxt />
-            </Transition>
-        </section>
-        <AuthView v-if="$store.state.auth.authType == 'login'">
-            <login-view></login-view>
-        </AuthView>
-        <AuthView v-else>
-            <register-view></register-view>
-        </AuthView>
-
-        <div class="w-[300px] h-max p-2 space-y-2 z-[50] fixed top-0 right-0 mt-[65px]">
-            <TransitionGroup name="list">
-                <feedback-item :feedback="f" v-for="f in $store.state.feedbacks" :key="f.id"></feedback-item>
-            </TransitionGroup>
+<section>
+    <div class="fixed w-full z-[1]">
+        <div class="header">
+            <router-link to="/">
+                <span>Our Menu</span>
+            </router-link>
+            <div class="flex items-center gap-x-3">
+                <nuxt-link to="/cart">
+                    <span>Cart <i class="pi pi-shopping-cart"></i></span>
+                </nuxt-link>
+                <nuxt-link to="/login">
+                    <span>Login <i class="pi pi-unlock"></i></span>
+                </nuxt-link>
+            </div>
         </div>
-    </section>
+    </div>
+    <nuxt />
+</section>
 </template>
 
 <script>
-import AuthView from '~/components/Auth/AuthView.vue';
-import RegisterView from '~/components/Auth/RegisterView.vue';
-import LoginView from '~/components/Auth/LoginView.vue';
 import FeedbackItem from '@/components/Feedbacks/FeedbackItem.vue'
 import HeaderRightLinks from '@/components/HeaderRightLinks'
-import initiateData from '@/mixins/initiateData'
+// import initiateData from '@/mixins/initiateData'
 
 export default {
-    components: { AuthView, RegisterView, LoginView, FeedbackItem, HeaderRightLinks },
-    mixins: [initiateData]
+    components: { FeedbackItem, HeaderRightLinks },
+    // mixins: [initiateData]
 }
 </script>
 
 <style scoped>
-.header-nav div {
-  @apply flex py-[20px] justify-end space-x-3 max-w-[1200px] mx-auto px-3;
+.header {
+  @apply py-[25px] flex items-center justify-between px-3 md:px-[50px];
+}
+.header a {
+  @apply text-slate-100 text-sm mx-[14px] py-[6px] relative;
+}
+.header a ::after {
+  content: '';
+  @apply w-0 h-[2px] transition-all border block bg-slate-200 absolute left-0 -bottom-1;
+}
+.header a:hover ::after, .header .nuxt-link-exact-active ::after {
+  @apply w-[25px];
 }
 </style>
