@@ -1,19 +1,7 @@
 <template>
 <section>
     <div class="fixed w-full z-[1]">
-        <div class="header">
-            <router-link to="/">
-                <span>Our Menu</span>
-            </router-link>
-            <div class="flex items-center gap-x-3">
-                <nuxt-link to="/cart">
-                    <span>Cart <i class="pi pi-shopping-cart"></i></span>
-                </nuxt-link>
-                <nuxt-link to="/login">
-                    <span>Login <i class="pi pi-unlock"></i></span>
-                </nuxt-link>
-            </div>
-        </div>
+        <HeaderLinks />
     </div>
     <nuxt />
 </section>
@@ -21,12 +9,10 @@
 
 <script>
 import FeedbackItem from '@/components/Feedbacks/FeedbackItem.vue'
-import HeaderRightLinks from '@/components/HeaderRightLinks'
-// import initiateData from '@/mixins/initiateData'
+import HeaderLinks from '~/components/Common/HeaderLinks.vue'
 
 export default {
-    components: { FeedbackItem, HeaderRightLinks },
-    // mixins: [initiateData]
+    components: { FeedbackItem, HeaderLinks },
 }
 </script>
 
