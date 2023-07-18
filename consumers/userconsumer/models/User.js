@@ -1,6 +1,21 @@
 const mongoose = require('mongoose')
 
-const UserSchema = new mongoose.Schema({
+require('dotenv').config()
+
+const dbConfig = {
+    productDBUrl: process.env.PRODUCT_DB,
+    orderDBUrl: process.env.ORDER_DB,
+    options: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    }
+}
+
+const productConn = mongoose.createConnection(dbConfig.productDBUrl, dbConfig.options)
+const orderConn = mongoose.createConnection(dbConfig.orderDBUrl, dbConfig.options)
+
+
+const schema = {
     name: {
         type: String,
         required: true,
@@ -18,8 +33,11 @@ const UserSchema = new mongoose.Schema({
         enum: ['admin', 'regular'],
         default: 'regular'
     },
-})
+}
 
-const User = mongoose.model('User', UserSchema)
+const UserSchema = new mongoose.Schema(schema)
 
-module.exports = User
+const ProdUser = productConn.model('User', UserSchema)
+const OrdUser = orderConn.model('User', UserSchema)
+
+module.exports = { ProdUser, OrdUser }
