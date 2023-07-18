@@ -49,6 +49,7 @@ export default {
           try {
             const response = await this.$auth.loginWith('local', {data: this.form})
             console.log(response)
+            this.$router.push('/')
           } catch(err) {
             // console.log(err)
             this.error = this.parseError(err)
