@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const loadClient = require('../config/redis')
+const { shareUserReg } = require('./ShareController')
 
 module.exports = {
     register: async(req, res) => {
@@ -20,6 +21,7 @@ module.exports = {
         
             // Store user data in Redis
             const user = await User.create({...req.body, password })
+            await shareUserReg(user)
             res.send(user);
 
           } catch (error) {
