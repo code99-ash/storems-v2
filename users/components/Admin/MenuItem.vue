@@ -2,7 +2,7 @@
     <tr v-if="!edit">
         <td>{{ item.title }}</td>
         <td>${{ item.price }}</td>
-        <td>{{ item.available }}</td>
+        <td>{{ item.qtyAvailable }}</td>
         <td class="space-x-5">
             <i class="pi pi-pencil cursor-pointer" @click="edit=true"></i>
             <i class="pi pi-trash text-red-500 cursor-pointer"></i>
@@ -16,7 +16,7 @@
             <input type="text" class="menu-input w-[120px]" v-model="editData.price">
         </td>
         <td>
-            <input type="text" class="menu-input w-[100px]" v-model="editData.quantity">
+            <input type="text" class="menu-input w-[100px]" v-model="editData.qtyAvailable">
         </td>
         <td class="">
             <button class="btn bg-amber-600 text-amber-50 rounded text-sm"
@@ -33,14 +33,14 @@ export default {
         editData: {
             title: '',
             price: null,
-            quantity: 0
+            qtyAvailable: 0
         }
     }),
     watch: {
         edit: function(val) {
             if(!val) return;
-            const {title, price, available} = this.item
-            this.editData = {title, price, quantity: available}
+            const {title, price, qtyAvailable} = this.item
+            this.editData = {title, price, qtyAvailable}
         }
     },
     methods: {
@@ -56,7 +56,7 @@ tr {
     @apply border-y border-neutral-500 hover:bg-neutral-700 transition-all;
 }
 td {
-    @apply py-3 text-neutral-200 px-2;
+    @apply py-3 text-neutral-200 px-2 text-xs sm:text-sm md:text-base;
 }
 .menu-input {
     @apply h-[38px] border border-neutral-500 outline-0 rounded bg-neutral-600 px-2;

@@ -62,7 +62,7 @@ export default {
         this.loading = true
         try {
           const { name, email, pw1 } = this
-          await this.$axios.$post(`api/auth/register`, { name, email, password: pw1 })
+          await this.$axios.$post(`/auth/register`, { name, email, password: pw1 })
           this.$router.push('/login')
         } catch(err) {
           this.error = this.parseError()

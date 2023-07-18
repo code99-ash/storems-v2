@@ -43,7 +43,6 @@
 
 
 <script>
-import { centralBase } from '~/utils';
 import CartItem from '../components/CartItem.vue';
 import CartTabbar from '../components/Common/CartTabbar.vue';
 export default {
@@ -61,52 +60,52 @@ export default {
     activeTabChanged(index) {
       this.activeTab = index
     },
-    async checkoutOrder() {
-      if(!(this.address && this.phone)) {
-        this.$store.dispatch('addFeedback', {
-            heading: 'Form Error Alert',
-            variant: 'error',
-            body: 'All fields are required',
-        })
-        return;
-      }
-      let user = localStorage.getItem('user')
-      if(!user) {
-        this.$store.dispatch('auth/setOpenAuth', true)
-        return;
-      }
-      user = JSON.parse(user)
-      console.log(user)
-      const data = {
-        user: user._id,
-        ref: new Date().getTime().toString(),
-        address: this.address,
-        phone: this.phone,
-        amount: this.$store.state.cartAmount,
-        items: this.$store.state.cartItems.map(each => {
-          const item = {
-            product: each._id,
-            quantity: each.quantity,
-            price: each.price
-          }
-          return item;
-        })
-      }
-      console.log(data)
+    // async checkoutOrder() {
+    //   if(!(this.address && this.phone)) {
+    //     this.$store.dispatch('addFeedback', {
+    //         heading: 'Form Error Alert',
+    //         variant: 'error',
+    //         body: 'All fields are required',
+    //     })
+    //     return;
+    //   }
+    //   let user = localStorage.getItem('user')
+    //   if(!user) {
+    //     this.$store.dispatch('auth/setOpenAuth', true)
+    //     return;
+    //   }
+    //   user = JSON.parse(user)
+    //   console.log(user)
+    //   const data = {
+    //     user: user._id,
+    //     ref: new Date().getTime().toString(),
+    //     address: this.address,
+    //     phone: this.phone,
+    //     amount: this.$store.state.cartAmount,
+    //     items: this.$store.state.cartItems.map(each => {
+    //       const item = {
+    //         product: each._id,
+    //         quantity: each.quantity,
+    //         price: each.price
+    //       }
+    //       return item;
+    //     })
+    //   }
+    //   console.log(data)
 
-      try {
-        const resp = await this.$axios.$post(`${centralBase}/orders`, {...data})
-        console.log(resp)
-      }catch(err) {
-        console.log(err)
-        this.$store.dispatch('addFeedback', {
-            heading: 'Error Alert',
-            variant: 'error',
-            body: err.response.data ?? 'An error occured',
-        })
-      }
+    //   try {
+    //     const resp = await this.$axios.$post(`${centralBase}/orders`, {...data})
+    //     console.log(resp)
+    //   }catch(err) {
+    //     console.log(err)
+    //     this.$store.dispatch('addFeedback', {
+    //         heading: 'Error Alert',
+    //         variant: 'error',
+    //         body: err.response.data ?? 'An error occured',
+    //     })
+    //   }
 
-    }
+    // }
   }
 }
 </script>

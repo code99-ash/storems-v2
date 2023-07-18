@@ -7,23 +7,28 @@
                 <tr class="thead-r">
                     <th>Name</th>
                     <th>Price ($)</th>
-                    <th>Quantity</th>
+                    <th>
+                        <span class="md:hidden">Qty</span>
+                        <span class="hidden md:inline">Quantity</span>
+                    </th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <menu-item v-for="item in menu" :key="item.id" :item="item"></menu-item>
+                <add-menu></add-menu>
+                <MenuItem v-for="item in $store.state.products.data" :key="item._id" :item="item" />
             </tbody>
         </table>
     </section>
 </template>
 
 <script>
-import MenuItem from '../../components/Admin/MenuItem.vue'
+import MenuItem from '~/components/Admin/MenuItem.vue'
+import AddMenu from '~/components/Admin/AddMenu.vue';
 export default {
     layout: 'admin',
     components: {
-        MenuItem
+        MenuItem, AddMenu
     },
     data: () => ({
         menu: [

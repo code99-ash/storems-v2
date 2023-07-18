@@ -18,14 +18,24 @@
             <div class="grow px-3 pb-[80px] md:pb-0">
                 <nuxt />
             </div>
+
+            <div class="w-[300px] h-max p-2 space-y-2 z-[50] fixed top-0 right-0 mt-[65px]">
+                <TransitionGroup name="list">
+                    <feedback-item :feedback="f" v-for="f in $store.state.feedbacks" :key="f.id"></feedback-item>
+                </TransitionGroup>
+            </div>
         </main>
     </section>
 </template>
 
 
 <script>
+import FeedbackItem from '~/components/Feedbacks/FeedbackItem.vue';
 export default {
-    middleware: ['auth', 'admin'],
+    components: { 
+        FeedbackItem,
+    },
+    middleware: ['admin'],
     data: () => ({
         menus: [
             {name: 'Menu', icon: 'pi-chevron-right', path: '/admin'},
@@ -44,7 +54,7 @@ export default {
 .menu-list {
     @apply fixed bottom-0 left-0 w-full flex flex-row items-center justify-between 
     md:inline-block py-3 md:py-0
-    md:relative flex-none md:w-[280px] md:min-h-[60vh] px-3 md:space-y-5;
+    md:relative flex-none md:w-[220px] md:min-h-[60vh] px-3 md:space-y-5;
 }
 .menu {
     @apply flex py-[10px] text-neutral-400 items-center gap-x-3 hover:gap-x-5 

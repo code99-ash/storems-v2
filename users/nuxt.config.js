@@ -4,7 +4,7 @@ export default {
     port: 3000,
     host: '0.0.0.0',
   },
-  ssr: false,
+  ssr: true,
   head: {
     title: 'storeMS',
     htmlAttrs: {
@@ -29,7 +29,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/axios-interceptor.js',
+    // '~/plugins/axios-interceptor.js',
     { src: '~/plugins/socket-io.js', ssr: false }
   ],
 
@@ -51,7 +51,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'http://localhost/api',
   },
 
   auth: {
@@ -68,9 +68,9 @@ export default {
           // autoFetch: true
         },
         endpoints: {
-          login: { url: '/api/auth/login', method: 'post' },
-          logout: { url: '/api/auth/logout', method: 'post' },
-          user: { url: '/api/auth/user', method: 'get' }
+          login: { url: '/auth/login', method: 'post' },
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/auth/user', method: 'get' }
         }
       }
     }
